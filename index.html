@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademiBot Mobile App - UV Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="phone-status-bar">
+            <span>14:04</span>
+            <div class="d-flex gap-1 align-items-center">
+                <i class="bi bi-wifi"></i>
+                <i class="bi bi-reception-4"></i>
+                <i class="bi bi-battery-full"></i>
+            </div>
+        </div>
+
+        <div id="app-screens-viewport">
+            <!-- PANTALLA 1: MENÚ DE SELECCIÓN DE PERFIL -->
+            <div class="app-screen menu-screen active" id="screen-menu">
+                <div class="text-center mb-4">
+                    <img src="logo.png" alt="AcademiBot" class="img-fluid rounded-circle bg-white p-1 shadow-sm mb-3" style="width: 90px; height: 90px; object-fit: cover;">
+                    <h4 class="fw-bold m-0 text-dark">AcademiBot</h4>
+                    <span class="badge bg-primary text-white fw-bold mb-1">Universidad Veracruzana</span>
+                    <p class="text-muted small">Selecciona tu perfil de acceso</p>
+                </div>
+
+                <div class="profile-card" onclick="startChat('estudiante')">
+                    <div class="profile-icon bg-primary"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold m-0 text-dark">Estudiante Licenciatura</h6>
+                        <small class="text-muted">Inscripciones, becas, IMSS y bajas</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+
+                <div class="profile-card" onclick="startChat('posgrado')">
+                    <div class="profile-icon bg-success"><i class="bi bi-award-fill"></i></div>
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold m-0 text-dark">Posgrado UV</h6>
+                        <small class="text-muted">Maestrías, CONAHCYT y movilidad</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+
+                <div class="profile-card" onclick="startChat('egresado')">
+                    <div class="profile-icon bg-warning"><i class="bi bi-briefcase-fill"></i></div>
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold m-0 text-dark">Egresado / Alumni UV</h6>
+                        <small class="text-muted">Titulación, servicio social y bolsa de trabajo</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: INTERFAZ DE CHATBOT -->
+            <div class="app-screen" id="screen-chat">
+                <div class="app-header">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-menu')">
+                        <i class="bi bi-arrow-left fs-4"></i>
+                    </button>
+                    <img src="logo.png" alt="AcademiBot">
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold" id="headerTitle">AcademiBot - UV</h6>
+                        <small class="text-white-50 d-flex align-items-center gap-1" style="font-size: 0.7rem;">
+                            <i class="bi bi-circle-fill text-success" style="font-size: 0.4rem;"></i> Canal Conectado
+                        </small>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-header-menu d-flex align-items-center justify-content-center shadow-sm" type="button" id="headerDropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <i class="bi bi-sliders text-primary fs-6"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end header-dropdown-menu" aria-labelledby="headerDropdownMenuButton">
+                            <li>
+                                <a class="dropdown-item text-primary fw-bold" href="#" onclick="viewTracking(); return false;">
+                                    <i class="bi bi-activity text-primary"></i> Tracking / Trámites Activos
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="navigateTo('screen-history'); return false;">
+                                    <i class="bi bi-journal-bookmark text-secondary"></i> Mi Historial Académico
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="navigateTo('screen-dates'); return false;">
+                                    <i class="bi bi-calendar3 text-secondary"></i> Fechas de Ventanilla
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="navigateTo('screen-docs'); return false;">
+                                    <i class="bi bi-file-earmark-pdf text-secondary"></i> Mis Documentos
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger small" href="#" onclick="navigateTo('screen-support'); return false;">
+                                    <i class="bi bi-exclamation-triangle"></i> Soporte Técnico UV
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="app-body" id="chatContainer"></div>
+
+                <div class="app-input-area">
+                    <div class="d-flex overflow-x-auto gap-2 mb-2 pb-1" id="suggestionsBox" style="scrollbar-width: none;"></div>
+                    <div class="input-group">
+                        <input type="file" id="fileAttachmentInput" style="display: none;" onchange="handleFileSelected(this)">
+                        
+                        <button class="btn btn-light border bg-white text-muted" type="button" onclick="document.getElementById('fileAttachmentInput').click()" title="Adjuntar Documento u Hoja de Pago">
+                            <i class="bi bi-paperclip"></i>
+                        </button>
+                        
+                        <button class="btn btn-light border bg-white text-muted btn-mic" id="btn-mic" onclick="toggleVoiceRecognition()">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+                        <input type="text" id="appInput" class="form-control bg-light border-0 shadow-none" placeholder="Escribe, habla o adjunta..." onkeypress="checkEnter(event)">
+                        <button class="btn btn-primary px-3" onclick="processUserMessage()"><i class="bi bi-send-fill"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANTALLA 3: MÓDULO INTERACTIVO DE SEGUIMIENTO -->
+            <div class="app-screen" id="screen-tracking">
+                <div class="app-header bg-dark">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')"><i class="bi bi-arrow-left fs-4"></i></button>
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold">Mis Trámites Activos</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">Sincronizado con Hephys UV</small>
+                    </div>
+                    <button class="btn btn-link p-0 text-success border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoTramitesModal" title="Información del Sistema">
+                        <i class="bi bi-shield-check fs-4"></i>
+                    </button>
+                </div>
+                <div class="app-body" id="trackingList"></div>
+            </div>
+
+            <!-- PANTALLA: MI HISTORIAL ACADÉMICO / CALIFICACIONES (DEDICADA) -->
+            <div class="app-screen" id="screen-history">
+                <div class="app-header bg-dark">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
+                        <i class="bi bi-arrow-left fs-4"></i>
+                    </button>
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold">Historial Académico</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">Calificaciones</small>
+                    </div>
+                    <button class="btn btn-link p-0 text-warning border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoKardexModal" title="Información de Criterios">
+                        <i class="bi bi-award text-warning fs-4"></i>
+                    </button>
+                </div>
+                
+                <div class="app-body">
+                    <!-- Tarjeta de Resumen de Rendimiento -->
+                    <div class="card border-0 rounded-4 shadow-sm p-3 mb-3 bg-white text-center">
+                        <span class="text-muted small uppercase fw-bold" style="font-size: 0.7rem; letter-spacing: 1px;">Kardex Escolar</span>
+                        <div class="row align-items-center mt-2">
+                            <div class="col-6 border-end">
+                                <h2 class="fw-bold text-primary m-0">9.14</h2>
+                                <small class="text-muted">Promedio General</small>
+                            </div>
+                            <div class="col-6">
+                                <h2 class="fw-bold text-dark m-0">48%</h2>
+                                <small class="text-muted">Avance Créditos</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success-subtle text-success rounded-pill px-3 py-1 align-self-center mt-3 small fw-bold">Alumno Regular Vigente</span>
+                    </div>
+
+                    <!-- Lista de Materias Cursadas -->
+                    <h6 class="fw-bold text-secondary mb-2 small" style="letter-spacing: 0.5px;">EXPERIENCIAS EDUCATIVAS CURSADAS</h6>
+                    
+                    <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex justify-content-between align-items-center border-start border-4 border-success">
+                        <div>
+                            <h6 class="m-0 fw-bold small text-dark">Lectura y Escritura Académica</h6>
+                            <small class="text-muted">AFBG • Créditos: 6 • Ordinario</small>
+                        </div>
+                        <span class="badge bg-success text-white rounded-pill fw-bold px-2 py-1">10</span>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex justify-content-between align-items-center border-start border-4 border-success">
+                        <div>
+                            <h6 class="m-0 fw-bold small text-dark">Inglés I</h6>
+                            <small class="text-muted">AFBG • Créditos: 6 • Ordinario</small>
+                        </div>
+                        <span class="badge bg-success text-white rounded-pill fw-bold px-2 py-1">9.0</span>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex justify-content-between align-items-center border-start border-4 border-warning">
+                        <div>
+                            <h6 class="m-0 fw-bold small text-dark">Inglés II</h6>
+                            <small class="text-muted">AFBG • Créditos: 6 • Periodo Actual</small>
+                        </div>
+                        <span class="badge bg-warning text-dark rounded-pill fw-bold px-2 py-1">Cursando</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANTALLA: FECHAS DE VENTANILLA (DEDICADA - MEJORADA) -->
+            <div class="app-screen" id="screen-dates">
+                <div class="app-header bg-dark">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
+                        <i class="bi bi-arrow-left fs-4"></i>
+                    </button>
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold">Fechas de Ventanilla</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">Calendario Oficial de Trámites</small>
+                    </div>
+                    <!-- Botón interactivo para activar notificaciones de la agenda -->
+                    <button class="btn btn-link p-0 text-warning" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal" title="Notificar eventos">
+                        <i class="bi bi-bell-fill fs-5"></i>
+                    </button>
+                </div>
+                
+                <div class="app-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <p class="text-muted m-0" style="font-size: 0.78rem;">Cronograma oficial (Periodo 2026).</p>
+                    </div>
+                    
+                    <!-- Contenedor del Timeline Continuo -->
+                    <div class="timeline-container-v2">
+                        
+                        <!-- Hito 1: Pre-inscripción (Concluido) -->
+                        <div class="timeline-card-v2 done">
+                            <div class="timeline-badge-v2">
+                                <span class="day">10-15</span>
+                                <span class="month">AGO</span>
+                            </div>
+                            <div class="timeline-content-v2 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="m-0 fw-bold text-dark">Pre-inscripción ILUV</h6>
+                                    <span class="status-indicator done">Concluido</span>
+                                </div>
+                                <p class="text-muted m-0">Fase obligatoria de proyección de carga.</p>
+                                <div class="mt-2 text-muted small d-flex align-items-center gap-1">
+                                    <i class="bi bi-check-circle-fill text-success"></i> Procesado conforme
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hito 2: Inscripción por Bloques (Vigente / Actual) -->
+                        <div class="timeline-card-v2 active">
+                            <div class="timeline-badge-v2">
+                                <span class="day">18-22</span>
+                                <span class="month">AGO</span>
+                            </div>
+                            <div class="timeline-content-v2 shadow-sm border-start border-4 border-primary">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="m-0 fw-bold text-dark">Inscripción por Bloques</h6>
+                                    <span class="status-indicator active pulse-soft">Vigente</span>
+                                </div>
+                                <p class="text-muted m-0">Asignación horaria según promedios generales.</p>
+                                <div class="mt-2 text-primary small d-flex align-items-center gap-1 fw-medium">
+                                    <i class="bi bi-clock-history"></i> Cierra en 3 días
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hito 3: Bajas Ordinarias (Próximo) -->
+                        <div class="timeline-card-v2 upcoming">
+                            <div class="timeline-badge-v2">
+                                <span class="day">24-28</span>
+                                <span class="month">AGO</span>
+                            </div>
+                            <div class="timeline-content-v2 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="m-0 fw-bold text-dark">Bajas de EE Ordinarias</h6>
+                                    <span class="status-indicator upcoming">Próximo</span>
+                                </div>
+                                <p class="text-muted m-0">Primeros 5 días hábiles del periodo escolar para ajustes sin penalización.</p>
+                            </div>
+                        </div>
+
+                        <!-- Hito 4: Bajas Extemporáneas (Próximo) -->
+                        <div class="timeline-card-v2 upcoming">
+                            <div class="timeline-badge-v2">
+                                <span class="day">01-15</span>
+                                <span class="month">SEP</span>
+                            </div>
+                            <div class="timeline-content-v2 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="m-0 fw-bold text-dark">Bajas Extemporáneas</h6>
+                                    <span class="status-indicator upcoming">Próximo</span>
+                                </div>
+                                <p class="text-muted m-0">Entrega formal de solicitudes y justificantes ante el Consejo Técnico.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANTALLA 6: MIS DOCUMENTOS DIGITALES -->
+            <div class="app-screen" id="screen-docs">
+                <div class="app-header bg-dark">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
+                        <i class="bi bi-arrow-left fs-4"></i>
+                    </button>
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold">Mis Documentos</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">Expediente Digital del Estudiante</small>
+                    </div>
+                    
+                    <button class="btn btn-link p-0 text-info border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoDocsModal" title="Información de Expediente">
+                        <i class="bi bi-folder-check text-info fs-4"></i>
+                    </button>
+                </div>
+                
+                <div class="app-body" id="userDocsList">
+                    <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-file-earmark-pdf-fill text-danger fs-3"></i>
+                            <div>
+                                <h6 class="m-0 fw-bold small">Acta_Nacimiento_Cert.pdf</h6>
+                                <small class="text-muted">Validado de forma conforme</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANTALLA 7: SOPORTE TÉCNICO -->
+            <div class="app-screen" id="screen-support">
+                <div class="app-header bg-dark">
+                    <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')"><i class="bi bi-arrow-left fs-4"></i></button>
+                    <div class="flex-grow-1">
+                        <h6 class="m-0 fw-bold">Soporte Técnico</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">Mesa de ayuda AcademiBot</small>
+                    </div>
+                    <i class="bi bi-wrench-adjustable text-danger fs-4"></i>
+                </div>
+                <div class="app-body bg-white p-4">
+                    <button class="btn btn-primary w-100 rounded-pill py-2 fw-bold" onclick="alert('Reporte enviado.')">Enviar Reporte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ACTIVACIÓN DE RECORDATORIOS (BOOTSTRAP 5) -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true" style="z-index: 2000;">
+        <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Tamaño pequeño y centrado óptico para simular pop-up móvil -->
+            <div class="modal-content border-0 rounded-4 shadow">
+                
+                <!-- Cuerpo del Modal -->
+                <div class="modal-body text-center p-4">
+                    <!-- Icono animado institucional -->
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-bell-badge-fill" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2" id="notificationModalLabel">¿Activar Recordatorios?</h5>
+                    <p class="text-muted small mb-4">Te enviaremos alertas automáticas al celular antes de que cierren las ventanillas y el Consejo Técnico.</p>
+                    
+                    <!-- Acciones directas -->
+                    <div class="d-flex flex-column gap-2">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 fw-bold" data-bs-dismiss="modal" onclick="console.log('Recordatorios UV autorizados.');">
+                            <i class="bi bi-check2-circle me-1"></i> Sí, activar alertas
+                        </button>
+                        <button type="button" class="btn btn-light rounded-pill py-2 text-muted small" data-bs-dismiss="modal">
+                            Quizás más tarde
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="infoTramitesModal" tabindex="-1" aria-labelledby="infoTramitesModalLabel" aria-hidden="true" style="z-index: 2000;">
+        <div class="modal-dialog modal-dialog-centered modal-sm"> <div class="modal-content border-0 rounded-4 shadow">
+                
+                <div class="modal-header border-0 bg-light p-3">
+                    <h6 class="modal-title fw-bold text-dark d-flex align-items-center gap-2" id="infoTramitesModalLabel">
+                        <i class="bi bi-shield-lock-fill text-success"></i> Sistema de Seguridad
+                    </h6>
+                    <button type="button" class="btn-close small" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-3" style="font-size: 0.8rem; line-height: 1.5;">
+                    <p class="text-dark mb-3">Estás visualizando el entorno de tracking unificado de <strong>AcademiBot</strong> conectado formalmente al núcleo académico de <strong>Hephys UV</strong>.</p>
+                    
+                    <div class="d-flex gap-2 mb-2">
+                        <i class="bi bi-info-circle text-primary fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Actualización</strong>
+                            <p class="text-muted m-0 small">Los estados de validación se sincronizan de forma automatizada cada vez que Oficialía Escolar emite un dictamen.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <i class="bi bi-shield-fill-check text-success fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Cifrado de Datos</strong>
+                            <p class="text-muted m-0 small">Toda la documentación adjunta e identidades digitales están protegidas bajo el estatuto de protección de datos de la Universidad Veracruzana.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-secondary w-100 rounded-pill py-2 fw-bold small mt-1" data-bs-dismiss="modal">
+                        Entendido
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="infoKardexModal" tabindex="-1" aria-labelledby="infoKardexModalLabel" aria-hidden="true" style="z-index: 2000;">
+        <div class="modal-dialog modal-dialog-centered modal-sm"> <div class="modal-content border-0 rounded-4 shadow">
+                
+                <div class="modal-header border-0 bg-light p-3">
+                    <h6 class="modal-title fw-bold text-dark d-flex align-items-center gap-2" id="infoKardexModalLabel">
+                        <i class="bi bi-info-circle-fill text-primary"></i> Criterios de Evaluación
+                    </h6>
+                    <button type="button" class="btn-close small" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-3" style="font-size: 0.8rem; line-height: 1.5;">
+                    <p class="text-dark mb-3">La información mostrada corresponde al estatus oficial del alumno registrado en los servidores:</p>
+                    
+                    <div class="d-flex gap-2 mb-2">
+                        <i class="bi bi-calculator text-secondary fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Promedio Ponderado</strong>
+                            <p class="text-muted m-0 small">Calculado sumando los productos de las calificaciones por los créditos de cada EE, dividido entre el total de créditos cursados.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-2">
+                        <i class="bi bi-patch-check-fill text-success fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Estatus: Alumno Regular</strong>
+                            <p class="text-muted m-0 small">Asignado a los estudiantes que aprueban el 100% de sus créditos inscritos en el periodo inmediato anterior.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <i class="bi bi-bar-chart-line text-info fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Avance de Créditos</strong>
+                            <p class="text-muted m-0 small">Representa el porcentaje acumulado de créditos aprobados frente al total requerido para la obtención del título.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100 rounded-pill py-2 fw-bold small mt-1" data-bs-dismiss="modal">
+                        Entendido
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="infoDocsModal" tabindex="-1" aria-labelledby="infoDocsModalLabel" aria-hidden="true" style="z-index: 2000;">
+        <div class="modal-dialog modal-dialog-centered modal-sm"> <div class="modal-content border-0 rounded-4 shadow">
+                
+                <div class="modal-header border-0 bg-light p-3">
+                    <h6 class="modal-title fw-bold text-dark d-flex align-items-center gap-2" id="infoDocsModalLabel">
+                        <i class="bi bi-folder-fill text-info"></i> Expediente Institucional
+                    </h6>
+                    <button type="button" class="btn-close small" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-3" style="font-size: 0.8rem; line-height: 1.5;">
+                    <p class="text-dark mb-3">Este repositorio almacena los archivos digitales que has enviado a través del chat o ventanilla:</p>
+                    
+                    <div class="d-flex gap-2 mb-2">
+                        <i class="bi bi-cloud-check-fill text-success fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Indexación Automática</strong>
+                            <p class="text-muted m-0 small">Los comprobantes de pago, formatos de baja o requisitos de beca subidos a AcademiBot se indexan inmediatamente en tu perfil.</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <i class="bi bi-file-earmark-lock2-fill text-primary fs-5 flex-shrink-0"></i>
+                        <div>
+                            <strong class="text-dark">Formatos Admitidos</strong>
+                            <p class="text-muted m-0 small">El sistema procesa y valida de forma nativa documentos en formato PDF e imágenes (PNG/JPG) con un límite máximo de 5MB por archivo.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100 rounded-pill py-2 fw-bold small mt-1" data-bs-dismiss="modal">
+                        Entendido
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="knowledge.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Inicialización segura e inmediata ya que los elementos existen nativamente
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof initAppAppearence === "function") {
+                initAppAppearence();
+            }
+        });
+    </script>
+</body>
+</html>

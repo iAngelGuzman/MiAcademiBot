@@ -1,0 +1,519 @@
+/* ==========================================
+   ESTILOS GENERALES Y DISPOSITIVO MÓVIL
+   ========================================== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0c1a30;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor principal estilo Smartphone */
+.phone-container {
+    width: 100%;
+    max-width: 420px;
+    height: 90vh;
+    min-height: 680px;
+    background-color: #f8f9fa;
+    border-radius: 35px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 8px solid #212529;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* CONTEO DE CAPAS CRÍTICO: Obliga al viewport a ocupar todo el alto elástico del teléfono */
+#app-screens-viewport {
+    flex: 1; /* Absorbe todo el espacio vertical del celular */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Mantiene las pantallas contenidas sin desbordes */
+}
+
+/* Barra de estado superior */
+.phone-status-bar {
+    height: 24px;
+    background-color: #0d6efd;
+    color: white;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    font-weight: 500;
+    z-index: 10;
+}
+
+/* Contenedor de pantallas: Asegura el 100% de la altura disponible */
+.app-screen {
+    display: none;
+    flex-direction: column;
+    height: 100%; 
+    overflow: hidden; 
+    animation: screenFadeIn 0.3s ease-in-out;
+}
+
+.app-screen.active {
+    display: flex;
+}
+
+/* Cuerpo del chat con scroll independiente que empuja la barra al fondo */
+.app-body {
+    flex: 1; 
+    background-color: #f1f5f9;
+    overflow-y: auto; 
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   PANTALLA DE PERFILES (MENÚ PRINCIPAL)
+   ========================================== */
+.menu-screen {
+    background-color: #f1f5f9;
+    padding: 24px;
+    justify-content: center;
+}
+
+.profile-card {
+    background: white;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.profile-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* ==========================================
+   ENCABEZADOS DE LA APP (HEADERS)
+   ========================================== */
+.app-header {
+    background-color: #0d6efd;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1050; 
+}
+
+.app-header img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.btn-header-menu {
+    width: 38px;
+    height: 38px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+}
+
+/* ==========================================
+   COMPONENTES DEL CHAT (MENSAJES Y CHIPS)
+   ========================================== */
+.msg {
+    max-width: 82%;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    animation: bubbleFadeIn 0.2s ease;
+}
+
+.msg-bot {
+    background-color: white;
+    color: #212529;
+    border-top-left-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.msg-user {
+    background-color: #0d6efd;
+    color: white;
+    margin-left: auto;
+    border-top-right-radius: 2px;
+}
+
+.suggestion-chip {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* Menús de botones de continuación */
+.msg-action-menu {
+    max-width: 85%;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: bubbleFadeIn 0.3s ease;
+}
+
+.msg-action-menu .btn-outline-primary {
+    background-color: white !important;
+    color: #0d6efd !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    font-size: 0.85rem !important;
+    text-align: left !important;
+    width: 100% !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.msg-action-menu .btn-outline-primary:hover {
+    background-color: #e3efff !important;
+    color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    transform: translateY(-1px);
+}
+
+.msg-action-menu .btn-outline-primary:active {
+    background-color: #cbdffb !important;
+    color: #0a4baf !important;
+    transform: translateY(0);
+}
+
+/* Caja de previsualización multimedia */
+.msg-media-box {
+    background-color: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 8px;
+    max-width: 82%;
+    margin-bottom: 12px;
+    margin-left: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    animation: bubbleFadeIn 0.2s ease;
+}
+
+.msg-media-preview {
+    max-width: 100%;
+    border-radius: 12px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* ==========================================
+   BARRA DE ENTRADA INFERIOR (INPUT AREA)
+   ========================================== */
+.app-input-area {
+    background-color: white;
+    padding: 12px 16px;
+    border-top: 1px solid #e2e8f0;
+    flex-shrink: 0; /* Evita que colapse o se comprima */
+    margin-top: auto; /* Fuerza el anclaje absoluto en la base del layout */
+    z-index: 5;
+}
+
+.app-input-area .input-group {
+    display: flex;
+    align-items: center;
+    gap: 6px; 
+}
+
+.app-input-area .form-control {
+    border-radius: 22px !important; 
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 10px 16px !important;
+    font-size: 0.88rem;
+    color: #334155 !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+.app-input-area .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15) !important;
+}
+
+.app-input-area .btn-light {
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+    color: #64748b !important;
+    transition: all 0.2s ease;
+}
+
+.app-input-area .btn-light:hover {
+    background-color: #f8fafc !important;
+    color: #0d6efd !important;
+    border-color: #cbd5e1 !important;
+}
+
+.app-input-area .btn-primary {
+    width: 40px;
+    height: 40px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    background-color: #0d6efd !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2) !important;
+    transition: all 0.2s ease;
+}
+
+.app-input-area .btn-primary:hover {
+    background-color: #0a4baf !important;
+    transform: scale(1.04);
+}
+
+.app-input-area .btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================
+   MÓDULOS DE COMPLEMENTOS (TRACKING & DROPDOWNS)
+   ========================================== */
+.tracking-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border-left: 5px solid #0d6efd;
+    transition: transform 0.2s ease;
+}
+
+.tracking-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Iconos y textos de estado secundario */
+.tracking-card .text-muted {
+    font-size: 0.78rem !important;
+    line-height: 1.5;
+}
+
+.tracking-card .bi {
+    color: #64748b;
+}
+
+.tracking-card.success-border { border-left-color: #198754; }
+.tracking-card.warning-border { border-left-color: #ffc107; }
+
+/* Ajustes de espaciado fino para las líneas de la línea de tiempo */
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 0.82rem !important;
+    line-height: 1.4;
+}
+
+.timeline-item::before {
+    display: none !important;
+}
+
+.timeline-item.done::before { background-color: #198754; }
+.timeline-item.active::before { background-color: #0d6efd; }
+
+/* ==========================================
+   DISEÑO AVANZADO DE PANTALLA DE VENTANILLAS
+   ========================================== */
+
+/* CONTEXTO DE LÍNEA DE TIEMPO CONTINUA CON ESPACIADO MEJORADO */
+.timeline-container-v2 {
+    position: relative;
+    margin-left: 35px;       /* Columna de espacio para los almanaques a la izquierda */
+    margin-right: 14px;      /* Colchón de seguridad a la derecha */
+    padding-top: 10px;        
+    padding-bottom: 10px;     
+    padding-left: 0;         /* REVENTAMOS EL PADDING: Dejamos el origen en 0 para el cálculo absoluto */
+    border-left: 3px dashed #cbd5e1; /* La línea vertical con el grosor exacto */
+}
+
+/* Cada bloque del hito */
+.timeline-card-v2 {
+    position: relative;
+    margin-bottom: 28px;
+    width: 100%;
+    display: block;
+}
+
+/* Bloque del calendario flotante izquierdo */
+.timeline-badge-v2 {
+    position: absolute;
+    /* ALINEACIÓN GEOMÉTRICA CON COORDENADA NEGATIVA COMPENSADA */
+    left: -1.5px;            /* Se posiciona exactamente en el centro de los 3px de la línea */
+    top: 50%;                /* Centrado vertical respecto a la tarjeta */
+    transform: translate(-50%, -50%); /* Ajuste perfecto en cruz (X e Y) */
+    
+    width: 54px;             /* Reducimos ligeramente para que se adapte mejor al layout móvil */
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 10px;
+    padding: 6px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.15);
+    z-index: 5;              /* Capa superior para que nunca se encime el texto */
+}
+
+.timeline-badge-v2 .day {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.timeline-badge-v2 .month {
+    font-size: 0.62rem;
+    font-weight: 500;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* Variaciones de colores según el estado */
+.timeline-card-v2.done .timeline-badge-v2 {
+    background-color: #64748b; /* Gris para eventos pasados */
+    box-shadow: none;
+}
+
+.timeline-card-v2.upcoming .timeline-badge-v2 {
+    background-color: #475569; /* Azul oscuro pizarra para eventos futuros */
+    box-shadow: none;
+}
+
+/* Contenido textual de las tarjetas */
+.timeline-content-v2 {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    /* MARGEN CRÍTICO: Empuja el recuadro blanco hacia la derecha 
+       para dejarle la vía libre al almanaque y que no se encimen */
+    margin-left: 42px; 
+    border: 1px solid #e2e8f0;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-content-v2 p {
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+/* Etiquetas indicadoras de estado */
+.status-indicator {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.status-indicator.done {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+.status-indicator.active {
+    background-color: #dbeafe;
+    color: #0d6efd;
+}
+
+.status-indicator.upcoming {
+    background-color: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+/* Animación sutil de pulso óptico para el trámite vigente */
+.pulse-soft {
+    animation: pulseSoftKey 2s infinite;
+}
+
+@keyframes pulseSoftKey {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.header-dropdown-menu {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    font-size: 0.88rem;
+    border: none;
+    z-index: 1100 !important; 
+}
+
+.header-dropdown-menu .dropdown-item {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-mic.listening {
+    background-color: #dc3545 !important;
+    color: white !important;
+    animation: pulseMic 1.2s infinite;
+}
+
+/* ==========================================
+   ANIMACIONES KEYFRAMES
+   ========================================== */
+@keyframes pulseMic {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+@keyframes screenFadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes bubbleFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
