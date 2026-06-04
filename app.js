@@ -5,6 +5,8 @@
 // Referencias globales del DOM
 let chatContainer, appInput, suggestionsBox, btnMic, trackingList;
 let currentProfile = ''; // Inicializamos vacío para permitir la primera carga limpia
+let recognition;
+let isListening = false;
 
 // Esta función es invocada de forma segura cuando la interfaz gráfica existe en el DOM
 function initAppAppearence() {
@@ -100,9 +102,22 @@ function viewTracking() {
 
 // Manejo dinámico de respuestas rápidas y redirección de flujos
 function sendQuickMessage(text) {
+    // Apagar micrófono si el usuario interactúa con un chip rápido
+    if (isListening && recognition) recognition.stop();
+
     // Interceptor lógico para redirigir nativamente a las sub-pestañas integradas
     if (text === "abrir_fechas_ventanilla") {
         navigateTo('screen-dates');
+        return;
+    }
+
+    const lowerText = text.toLowerCase();
+    if (lowerText === "subir mi voucher de pago" || lowerText === "subir constancia de biblioteca" || lowerText === "subir constancia de inscripción") {
+        pushMessage(text, 'user');
+        setTimeout(() => { 
+            const fileInput = document.getElementById('fileAttachmentInput');
+            if (fileInput) fileInput.click();
+        }, 600);
         return;
     }
     
@@ -126,6 +141,11 @@ function processUserMessage() {
     const text = appInput.value.trim();
     if (!text) return;
     
+    // Apagar micrófono de forma preventiva si se envía texto manualmente
+    if (isListening && recognition) {
+        recognition.stop();
+    }
+
     pushMessage(text, 'user');
     appInput.value = '';
     
@@ -172,7 +192,7 @@ function analyzeAndReply(text) {
     }, 1500);
 }
 
-// Inyección y formateo de menús de botones de continuación dentro de las burbujas
+// Inyección y formato de menús de botones de continuación dentro de las burbujas
 function injectActionMenu(menuArray) {
     setTimeout(() => {
         if (!chatContainer) return;
@@ -269,40 +289,74 @@ function checkEnter(e) {
     if (e.key === 'Enter') processUserMessage();
 }
 
-/* RECONOCIMIENTO DE VOZ POR HARDWARE (SPEECH RECOGNITION API) */
+/* ==========================================
+   IMPLEMENTACIÓN DEL RECONOCIMIENTO DE VOZ
+   ========================================== */
 function initVoiceRecognition() {
+    // Comprobar compatibilidad nativa del navegador (Chrome, Edge, Safari)
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.lang = 'es-MX';
+        
+        // Ajustes del motor
+        recognition.continuous = false;  // Detener la escucha al notar una pausa completa
+        recognition.interimResults = false; // No mostrar resultados parciales ruidosos
+        recognition.lang = 'es-MX';       // Configurar español de México institucional
 
+        // Evento: Comienza a capturar audio por hardware
         recognition.onstart = () => {
             isListening = true;
-            if (btnMic) btnMic.classList.add('listening');
+            if (btnMic) btnMic.classList.add('listening'); // Lanza la animación CSS del pulso rojo
             if (appInput) appInput.placeholder = "Escuchando tu consulta...";
         };
 
-        recognition.onerror = () => { stopListeningState(); };
-        recognition.onend = () => { stopListeningState(); };
+        // Captura de errores
+        recognition.onerror = (event) => {
+            console.warn("Reconocimiento de voz detectó un estado vacío o error:", event.error);
+            stopListeningState();
+        };
 
+        // Evento: El micrófono se apaga
+        recognition.onend = () => {
+            stopListeningState();
+        };
+
+        // Evento: Transcripción exitosa del flujo de audio a cadena de texto
         recognition.onresult = (event) => {
             if (appInput) {
-                appInput.value = event.results[0][0].transcript;
-                setTimeout(() => { processUserMessage(); }, 500);
+                // Extraer texto analizado
+                const transcriptResult = event.results[0][0].transcript;
+                appInput.value = transcriptResult;
+                
+                // Disparo diferido para emular el envío natural del mensaje
+                setTimeout(() => { 
+                    processUserMessage(); 
+                }, 500);
             }
         };
     } else {
-        if (btnMic) btnMic.disabled = true;
+        // En caso de navegadores no compatibles, deshabilitar el botón de forma estética
+        if (btnMic) {
+            btnMic.disabled = true;
+            btnMic.title = "El reconocimiento de voz no es compatible con este navegador";
+        }
     }
 }
 
+// Alternador de estado (Play / Stop) del icono del micrófono
 function toggleVoiceRecognition() {
     if (!recognition) return;
-    if (isListening) recognition.stop();
-    else recognition.start();
+    
+    if (isListening) {
+        recognition.stop();
+    } else {
+        // Limpiar la barra antes de empezar a escuchar
+        if (appInput) appInput.value = ''; 
+        recognition.start();
+    }
 }
 
+// Reseteo gráfico y de banderas de estado
 function stopListeningState() {
     isListening = false;
     if (btnMic) btnMic.classList.remove('listening');

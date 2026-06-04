@@ -11,7 +11,7 @@
         <div class="profile-icon bg-primary"><i class="bi bi-mortarboard-fill"></i></div>
         <div class="flex-grow-1">
             <h6 class="fw-bold m-0 text-dark">Estudiante Licenciatura</h6>
-            <small class="text-muted">Inscripciones SICEUV, becas, IMSS y bajas</small>
+            <small class="text-muted">Inscripciones, becas, IMSS y bajas</small>
         </div>
         <i class="bi bi-chevron-right text-muted"></i>
     </div>
@@ -28,14 +28,14 @@
     <div class="profile-card" onclick="startChat('egresado')">
         <div class="profile-icon bg-warning"><i class="bi bi-briefcase-fill"></i></div>
         <div class="flex-grow-1">
-            <h6 class="fw-bold m-0 text-dark">Egresado / Alumni UV</h6>
+            <h6 class="fw-bold m-0 text-dark">Egresado / Alumno UV</h6>
             <small class="text-muted">Titulación, servicio social y bolsa de trabajo</small>
         </div>
         <i class="bi bi-chevron-right text-muted"></i>
     </div>
 </div>
 
-<!-- PANTALLA 2: INTERFAZ DE CHATBOT (ESTRUCTURA PREMIUM UNIFICADA) -->
+<!-- PANTALLA 2: INTERFAZ DE CHATBOT -->
 <div class="app-screen" id="screen-chat">
     <div class="app-header">
         <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-menu')">
@@ -60,13 +60,11 @@
                     </a>
                 </li>
                 <li>
-                    <!-- Navegación directa a Calificaciones -->
                     <a class="dropdown-item" href="#" onclick="navigateTo('screen-history'); return false;">
                         <i class="bi bi-journal-bookmark text-secondary"></i> Mi Historial Académico
                     </a>
                 </li>
                 <li>
-                    <!-- Navegación directa a Fechas de Ventanilla -->
                     <a class="dropdown-item" href="#" onclick="navigateTo('screen-dates'); return false;">
                         <i class="bi bi-calendar3 text-secondary"></i> Fechas de Ventanilla
                     </a>
@@ -86,43 +84,37 @@
         </div>
     </div>
 
-    <!-- El elástico gris del chat que empuja la barra al fondo -->
     <div class="app-body" id="chatContainer"></div>
 
-    <!-- La barra inferior anclada perfectamente -->
     <div class="app-input-area">
         <div class="d-flex overflow-x-auto gap-2 mb-2 pb-1" id="suggestionsBox" style="scrollbar-width: none;"></div>
         <div class="input-group">
             <input type="file" id="fileAttachmentInput" style="display: none;" onchange="handleFileSelected(this)">
             
-            <button class="btn btn-light" type="button" onclick="document.getElementById('fileAttachmentInput').click()" title="Adjuntar Archivo u Hoja de Pago">
-                <i class="bi bi-paperclip fs-5"></i>
+            <button class="btn btn-light border bg-white text-muted" type="button" onclick="document.getElementById('fileAttachmentInput').click()" title="Adjuntar Documento u Hoja de Pago">
+                <i class="bi bi-paperclip"></i>
             </button>
             
-            <button class="btn btn-light btn-mic" id="btn-mic" type="button" onclick="toggleVoiceRecognition()" title="Dictar por Voz">
-                <i class="bi bi-mic-fill fs-5"></i>
+            <button class="btn btn-light border bg-white text-muted btn-mic" id="btn-mic" onclick="toggleVoiceRecognition()">
+                <i class="bi bi-mic-fill"></i>
             </button>
-            
-            <input type="text" id="appInput" class="form-control" placeholder="Escribe, habla o adjunta..." onkeypress="checkEnter(event)">
-            
-            <button class="btn btn-primary" type="button" onclick="processUserMessage()" title="Enviar Consulta">
-                <i class="bi bi-send-fill" style="margin-left: 2px;"></i>
-            </button>
+            <input type="text" id="appInput" class="form-control bg-light border-0 shadow-none" placeholder="Escribe, habla o adjunta..." onkeypress="checkEnter(event)">
+            <button class="btn btn-primary px-3" onclick="processUserMessage()"><i class="bi bi-send-fill"></i></button>
         </div>
     </div>
 </div>
 
-<!-- PANTALLA 3: MÓDULO INTERACTIVO DE SEGUIMIENTO DE TRÁMITES -->
+<!-- PANTALLA 3: MÓDULO INTERACTIVO DE SEGUIMIENTO -->
 <div class="app-screen" id="screen-tracking">
     <div class="app-header bg-dark">
-        <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
-            <i class="bi bi-arrow-left fs-4"></i>
-        </button>
+        <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')"><i class="bi bi-arrow-left fs-4"></i></button>
         <div class="flex-grow-1">
             <h6 class="m-0 fw-bold">Mis Trámites Activos</h6>
             <small class="text-white-50" style="font-size: 0.7rem;">Sincronizado con Hephys UV</small>
         </div>
-        <i class="bi bi-shield-check text-success fs-4"></i>
+        <button class="btn btn-link p-0 text-success border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoTramitesModal" title="Información del Sistema">
+            <i class="bi bi-shield-check fs-4"></i>
+        </button>
     </div>
     <div class="app-body" id="trackingList"></div>
 </div>
@@ -135,9 +127,11 @@
         </button>
         <div class="flex-grow-1">
             <h6 class="m-0 fw-bold">Historial Académico</h6>
-            <small class="text-white-50" style="font-size: 0.7rem;">SICEUV / Consulta de Calificaciones</small>
+            <small class="text-white-50" style="font-size: 0.7rem;">Calificaciones</small>
         </div>
-        <i class="bi bi-mortarboard text-warning fs-4"></i>
+        <button class="btn btn-link p-0 text-warning border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoKardexModal" title="Información de Criterios">
+            <i class="bi bi-award text-warning fs-4"></i>
+        </button>
     </div>
     
     <div class="app-body">
@@ -186,57 +180,101 @@
     </div>
 </div>
 
-<!-- PANTALLA: FECHAS DE VENTANILLA (DEDICADA) -->
+<!-- PANTALLA: FECHAS DE VENTANILLA (DEDICADA - MEJORADA) -->
 <div class="app-screen" id="screen-dates">
     <div class="app-header bg-dark">
-        <button class="btn btn-link p-0 text-warning" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal" title="Notificar eventos">
-            <i class="bi bi-bell-fill fs-5"></i>
+        <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
+            <i class="bi bi-arrow-left fs-4"></i>
         </button>
         <div class="flex-grow-1">
             <h6 class="m-0 fw-bold">Fechas de Ventanilla</h6>
             <small class="text-white-50" style="font-size: 0.7rem;">Calendario Oficial de Trámites</small>
         </div>
-        <i class="bi bi-calendar3 text-info fs-4"></i>
+        <!-- Botón interactivo para activar notificaciones de la agenda -->
+        <button class="btn btn-link p-0 text-warning" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal" title="Notificar eventos">
+            <i class="bi bi-bell-fill fs-5"></i>
+        </button>
     </div>
     
     <div class="app-body">
-        <p class="text-muted mb-3" style="font-size: 0.78rem;">Cronograma de ventanillas administrativas (Periodo Escolar 2026).</p>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-muted m-0" style="font-size: 0.78rem;">Cronograma oficial (Periodo 2026).</p>
+        </div>
         
-        <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex align-items-center gap-3">
-            <div class="date-badge">10 - 15<br>AGO</div>
-            <div>
-                <h6 class="m-0 fw-bold small text-dark">Pre-inscripción ILUV</h6>
-                <small class="text-muted">Fase Obligatoria en Sistema SICEUV</small>
+        <!-- Contenedor del Timeline Continuo -->
+        <div class="timeline-container-v2">
+            
+            <!-- Hito 1: Pre-inscripción (Concluido) -->
+            <div class="timeline-card-v2 done">
+                <div class="timeline-badge-v2">
+                    <span class="day">10-15</span>
+                    <span class="month">AGO</span>
+                </div>
+                <div class="timeline-content-v2 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="m-0 fw-bold text-dark">Pre-inscripción ILUV</h6>
+                        <span class="status-indicator done">Concluido</span>
+                    </div>
+                    <p class="text-muted m-0">Fase obligatoria de proyección de carga.</p>
+                    <div class="mt-2 text-muted small d-flex align-items-center gap-1">
+                        <i class="bi bi-check-circle-fill text-success"></i> Procesado conforme
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex align-items-center gap-3">
-            <div class="date-badge bg-success">18 - 22<br>AGO</div>
-            <div>
-                <h6 class="m-0 fw-bold small text-dark">Inscripción por Bloques</h6>
-                <small class="text-muted">Asignación horaria según promedios</small>
+            <!-- Hito 2: Inscripción por Bloques (Vigente / Actual) -->
+            <div class="timeline-card-v2 active">
+                <div class="timeline-badge-v2">
+                    <span class="day">18-22</span>
+                    <span class="month">AGO</span>
+                </div>
+                <div class="timeline-content-v2 shadow-sm border-start border-4 border-primary">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="m-0 fw-bold text-dark">Inscripción por Bloques</h6>
+                        <span class="status-indicator active pulse-soft">Vigente</span>
+                    </div>
+                    <p class="text-muted m-0">Asignación horaria según promedios generales.</p>
+                    <div class="mt-2 text-primary small d-flex align-items-center gap-1 fw-medium">
+                        <i class="bi bi-clock-history"></i> Cierra en 3 días
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex align-items-center gap-3">
-            <div class="date-badge bg-warning text-dark">24 - 28<br>AGO</div>
-            <div>
-                <h6 class="m-0 fw-bold small text-dark">Bajas de EE Ordinarias</h6>
-                <small class="text-muted">Primeros 5 días hábiles del periodo</small>
+            <!-- Hito 3: Bajas Ordinarias (Próximo) -->
+            <div class="timeline-card-v2 upcoming">
+                <div class="timeline-badge-v2">
+                    <span class="day">24-28</span>
+                    <span class="month">AGO</span>
+                </div>
+                <div class="timeline-content-v2 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="m-0 fw-bold text-dark">Bajas de EE Ordinarias</h6>
+                        <span class="status-indicator upcoming">Próximo</span>
+                    </div>
+                    <p class="text-muted m-0">Primeros 5 días hábiles del periodo escolar para ajustes sin penalización.</p>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex align-items-center gap-3">
-            <div class="date-badge bg-danger">01 - 15<br>SEP</div>
-            <div>
-                <h6 class="m-0 fw-bold small text-dark">Bajas Extemporáneas</h6>
-                <small class="text-muted">Entrega de oficios ante el Consejo Técnico</small>
+            <!-- Hito 4: Bajas Extemporáneas (Próximo) -->
+            <div class="timeline-card-v2 upcoming">
+                <div class="timeline-badge-v2">
+                    <span class="day">01-15</span>
+                    <span class="month">SEP</span>
+                </div>
+                <div class="timeline-content-v2 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="m-0 fw-bold text-dark">Bajas Extemporáneas</h6>
+                        <span class="status-indicator upcoming">Próximo</span>
+                    </div>
+                    <p class="text-muted m-0">Entrega formal de solicitudes y justificantes ante el Consejo Técnico.</p>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- PANTALLA 5: MIS DOCUMENTOS DIGITALES -->
+<!-- PANTALLA 6: MIS DOCUMENTOS DIGITALES -->
 <div class="app-screen" id="screen-docs">
     <div class="app-header bg-dark">
         <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
@@ -244,10 +282,14 @@
         </button>
         <div class="flex-grow-1">
             <h6 class="m-0 fw-bold">Mis Documentos</h6>
-            <small class="text-white-50" style="font-size: 0.7rem;">Expediente de Obra e Identidades</small>
+            <small class="text-white-50" style="font-size: 0.7rem;">Expediente Digital del Estudiante</small>
         </div>
-        <i class="bi bi-folder-check text-info fs-4"></i>
+        
+        <button class="btn btn-link p-0 text-info border-0 bg-transparent" type="button" data-bs-toggle="modal" data-bs-target="#infoDocsModal" title="Información de Expediente">
+            <i class="bi bi-folder-check text-info fs-4"></i>
+        </button>
     </div>
+    
     <div class="app-body" id="userDocsList">
         <div class="bg-white p-3 rounded-4 shadow-sm mb-2 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3">
@@ -261,12 +303,10 @@
     </div>
 </div>
 
-<!-- PANTALLA 6: SOPORTE TÉCNICO UV -->
+<!-- PANTALLA 7: SOPORTE TÉCNICO -->
 <div class="app-screen" id="screen-support">
     <div class="app-header bg-dark">
-        <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')">
-            <i class="bi bi-arrow-left fs-4"></i>
-        </button>
+        <button class="btn btn-link p-0 text-white me-1" onclick="navigateTo('screen-chat')"><i class="bi bi-arrow-left fs-4"></i></button>
         <div class="flex-grow-1">
             <h6 class="m-0 fw-bold">Soporte Técnico</h6>
             <small class="text-white-50" style="font-size: 0.7rem;">Mesa de ayuda AcademiBot</small>
@@ -274,6 +314,6 @@
         <i class="bi bi-wrench-adjustable text-danger fs-4"></i>
     </div>
     <div class="app-body bg-white p-4">
-        <button class="btn btn-primary w-100 rounded-pill py-2 fw-bold" onclick="alert('Reporte enviado con éxito.')">Enviar Reporte</button>
+        <button class="btn btn-primary w-100 rounded-pill py-2 fw-bold" onclick="alert('Reporte enviado.')">Enviar Reporte</button>
     </div>
 </div>

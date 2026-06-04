@@ -1,12 +1,51 @@
 // Base de datos de conocimiento primaria estructurada por perfiles
+const subKnowledgeBase = {
+    "paso a paso para dar de alta una materia": {
+        response: "Pasos para el Alta de Experiencia Educativa (Lugares Vacantes):\n1. Revisa la oferta de lugares vacantes en tu portal MiUV.\n2. Si hay cupo y cumples con los prerrequisitos, selecciona la EE en SICEUV.\n3. Confirma el alta. Se reflejará en tu horario inmediatamente.",
+        menu: [{ label: "Ver Requisitos de Baja", query: "paso a paso para dar de baja una materia" }]
+    },
+    "paso a paso para dar de baja una materia": {
+        response: "Pasos para la Baja de Experiencia Educativa:\n1. Ingresa a MiUV en el periodo de Altas y Bajas (primeros 5 días).\n2. Selecciona la opción de 'Bajas'.\n3. Elige la materia que deseas retirar.\n4. Confirma la acción. Recuerda que no afecta tu historial académico.",
+        menu: [{ label: "Formato Consejo Técnico", query: "¿cómo redactar la solicitud de baja para el Consejo Técnico?" }]
+    },
+    "¿cómo redactar la solicitud de baja para el consejo técnico?": {
+        response: "La solicitud debe ir dirigida al H. Consejo Técnico de tu Facultad. Debes incluir tu nombre completo, matrícula, programa educativo, el nombre de la materia a dar de baja y una justificación válida con firma autógrafa.",
+        menu: []
+    },
+    "requisitos detallados para la beca escolar": {
+        response: "Para solicitar la Beca Escolar requieres:\n1. Promedio mínimo de 9.0 en el semestre anterior.\n2. Ser alumno regular.\n3. No adeudar materias.\n4. Constancia de inscripción vigente.",
+        menu: [
+            { label: "Ver montos de la beca", query: "montos de la beca" },
+            { label: "Subir constancia", query: "subir constancia de inscripción" }
+        ]
+    },
+    "montos de la beca": {
+        response: "La Beca Escolar se entrega en una sola exhibición por periodo. El monto varía según el presupuesto del comité técnico, pero oscila entre $2,000.00 y $4,000.00 MXN.",
+        menu: [{ label: "Subir Constancia de Inscripción", query: "subir constancia de inscripción" }]
+    },
+    "costo y pago de reposición de credencial": {
+        response: "El arancel de reposición de credencial se genera en el portal MiUV o solicitando el formato en la caja de tu Facultad. Una vez pagado, guarda el comprobante (voucher).",
+        menu: [{ label: "Ver siguientes pasos", query: "requisitos de foto y entrega para credencial" }]
+    },
+    "¿cómo tramitar el acta de extravío?": {
+        response: "En caso de robo o extravío, es obligatorio levantar un Acta de Hechos ante la Fiscalía o Ministerio Público, o tramitar la constancia de extravío en línea si tu estado lo permite.",
+        menu: [{ label: "Ver siguientes pasos", query: "requisitos de foto y entrega para credencial" }]
+    },
+    "requisitos de foto y entrega para credencial": {
+        response: "Para concluir la reposición, entrega en Oficialía Escolar de tu Facultad:\n1. Voucher de pago original.\n2. Acta de extravío (original y copia).\n3. Dos fotografías tamaño infantil recientes.\nEl trámite demora aproximadamente 15 días hábiles.",
+        menu: [{ label: "Subir comprobante de pago", query: "subir mi voucher de pago" }]
+    }
+};
+
 const dataProfiles = {
     estudiante: {
         title: "UV - Estudiante Licenciatura",
-        welcome: "¡Hola! Bienvenido al canal de Estudiantes Licenciatura. Pregúntame sobre inscripciones SICEUV, becas o bajas temporales.",
+        welcome: "¡Hola! Bienvenido al canal de Estudiantes Licenciatura. Pregúntame sobre inscripciones SICEUV, becas, altas y bajas, o reposición de credencial.",
         chips: [
             { label: "Inscripciones", text: "¿Cuándo inicia la pre-inscripción en SICEUV?" },
-            { label: "Baja Materia", text: "¿Cómo solicito una baja de materias?" },
-            { label: "Becas Escolares", text: "Requisitos detallados para la beca escolar" }
+            { label: "Altas y Bajas", text: "Proceso para alta o baja de materia" },
+            { label: "Becas Escolares", text: "Requisitos detallados para la beca escolar" },
+            { label: "Reposición Credencial", text: "Quiero reponer mi credencial" }
         ],
         knowledgeBase: [
             { 
@@ -19,165 +58,49 @@ const dataProfiles = {
                 ]
             },
             {
-                keys: ['baja', 'cancelar', 'retirar', 'materia'],
-                response: "El Estatuto de los Alumnos de la UV te permite dar de baja experiencias educativas bajo dos modalidades principales: 1) Baja por Experiencia Educativa (dentro de los primeros 5 días hábiles del periodo) y 2) Baja Temporal del Periodo Completo (justificada ante el Consejo Técnico). Ambas requieren que seas alumno regular o que la baja no afecte tus límites de permanencia.",
+                keys: ['alta', 'baja', 'cancelar', 'retirar', 'agregar', 'materia'],
+                response: "El periodo de Altas y Bajas (primeros 5 días hábiles del semestre) te permite ajustar tu horario. Puedes dar de alta materias si hay cupo (Lugares Vacantes) o dar de baja experiencias educativas en SICEUV sin afectación. También existe la Baja Temporal justificada ante Consejo Técnico.",
                 menu: [
-                    { label: "Requisitos para Baja de Materia", query: "Paso a paso para dar de baja una materia" },
-                    { label: "Consecuencias en la Permanencia", query: "¿Cómo afecta una baja a mi límite de tiempo en la UV?" },
-                    { label: "Formato para el Consejo Técnico", query: "¿Cómo redactar la solicitud de baja para el Consejo Técnico?" }
+                    { label: "Paso a paso: Dar de Alta", query: "paso a paso para dar de alta una materia" },
+                    { label: "Paso a paso: Dar de Baja", query: "paso a paso para dar de baja una materia" },
+                    { label: "Formato Consejo Técnico", query: "¿Cómo redactar la solicitud de baja para el Consejo Técnico?" }
                 ]
             },
             {
-                keys: ['beca', 'apoyo', 'estimulo'],
-                response: "La UV ofrece Becas Escolares por promedio y Estímulos al Rendimiento Académico. Requieres promedio mínimo de 8.5.",
+                keys: ['beca', 'escolar', 'apoyo', 'economico'],
+                response: "La Universidad Veracruzana ofrece la Beca Escolar a estudiantes con buen desempeño. ¿Te gustaria conocer los requisitos o los montos?",
                 menu: [
-                    { label: "Ver Requisitos Completos", query: "Requisitos detallados para la beca escolar" },
-                    { label: "Montos de Apoyo", query: "Montos de la beca" }
+                    { label: "Requisitos de la beca", query: "requisitos detallados para la beca escolar" },
+                    { label: "Montos de la beca", query: "montos de la beca" }
+                ]
+            },
+            {
+                keys: ['credencial', 'reposicion', 'extravio', 'perdi', 'perdí', 'reponer'],
+                response: "El trámite de reposición de credencial escolar requiere levantar un acta de extravío, pagar el arancel correspondiente y entregar los requisitos físicos en Oficialía Escolar.",
+                menu: [
+                    { label: "Paso 1: Arancel y Pago", query: "costo y pago de reposición de credencial" },
+                    { label: "Paso 2: Acta de extravío", query: "¿cómo tramitar el acta de extravío?" }
                 ]
             }
         ],
-        defaultAnswer: "Entendido. Procesando tu consulta para la Dirección General de Administración Escolar.",
-        trackingData: `
-            <div class="tracking-card warning-border mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-warning text-dark fw-bold rounded-pill" style="font-size:0.75rem;">En Dictamen</span>
-                    <small class="text-muted fw-medium">Folio: UV-EST-2026-09</small>
-                </div>
-                <h6 class="fw-bold text-dark mb-1">Baja Temporal Extemporánea</h6>
-                <div class="text-muted mb-2" style="font-size: 0.78rem;">
-                    <i class="bi bi-building me-1"></i> Consejo Técnico de la Facultad<br>
-                    <i class="bi bi-clock-history me-1"></i> Actualizado: Hace 2 horas
-                </div>
-                <div class="progress mb-3" style="height: 6px;">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 66%;"></div>
-                </div>
-                <div class="timeline-item done text-success fw-medium">✓ 1. Recepción y validación de motivos médicos (Validado)</div>
-                <div class="timeline-item active text-primary fw-bold">➔ 2. Evaluación y firmas del Consejo Técnico (En proceso)</div>
-                <div class="timeline-item text-muted">○ 3. Modificación de estatus en portal SICEUV (Pendiente)</div>
-            </div>
-
-            <div class="tracking-card success-border">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-success text-white fw-bold rounded-pill" style="font-size:0.75rem;">Alta Vigente</span>
-                    <small class="text-muted fw-medium">Folio: IMSS-UV-8841</small>
-                </div>
-                <h6 class="fw-bold text-dark mb-1">Activación de Seguro Facultativo (IMSS)</h6>
-                <div class="text-muted mb-2" style="font-size: 0.78rem;">
-                    <i class="bi bi-building me-1"></i> Ventanilla de Oficialía Escolar<br>
-                    <i class="bi bi-clock-history me-1"></i> Actualizado: Ayer, 11:20 AM
-                </div>
-                <div class="progress mb-3" style="height: 6px;">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"></div>
-                </div>
-                <div class="timeline-item done text-success fw-medium">✓ 1. Envío de Constancia de Derechos Digital (Completado)</div>
-                <div class="timeline-item done text-success fw-medium">✓ 2. Sincronización con el sistema institucional (Procesado)</div>
-            </div>
-        `
+        defaultAnswer: "No encontré una respuesta exacta a tu consulta. Puedes intentar reescribir tu pregunta usando palabras clave como 'baja de materia', 'beca', 'credencial', etc.",
+        trackingData: "<p class='text-muted p-3 text-center small'>No hay trámites activos registrados en Hephys.</p>"
     },
     posgrado: {
-        title: "UV - Unidad de Posgrado",
-        welcome: "Canal de Posgrado activo. Puedo asistirte en convocatorias de maestrías, doctorados y becas CONAHCYT. Sube tu anteproyecto o CVU para revisarlo.",
-        chips: [
-            { label: "Beca CONAHCYT", text: "Requisitos para la beca CONAHCYT" }
-        ],
-        knowledgeBase: [
-            { 
-                keys: ['conahcyt', 'beca'], 
-                response: "Para postular a la beca nacional CONAHCYT, debes estar inscrito de tiempo exclusivo y contar con un promedio mínimo de 8.0.",
-                menu: [
-                    { label: "Registro de CVU", query: "¿Cómo creo mi CVU de CONAHCYT?" },
-                    { label: "Ver Estatus de Beca", query: "Ver estatus beca conahcyt" }
-                ]
-            }
-        ],
-        defaultAnswer: "Entendido. Analizando tu consulta para los servidores de Posgrado UV.",
-        trackingData: `
-            <div class="tracking-card success-border mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-primary text-white fw-bold rounded-pill" style="font-size:0.75rem;">Postulado</span>
-                    <small class="text-muted fw-medium">Folio: CON-POS-5542</small>
-                </div>
-                <h6 class="fw-bold text-dark mb-1">Postulación Beca Nacional CONAHCYT</h6>
-                <div class="text-muted mb-2" style="font-size: 0.78rem;">
-                    <i class="bi bi-building me-1"></i> Coordinación de Estudios de Posgrado<br>
-                    <i class="bi bi-clock-history me-1"></i> Actualizado: 29/05/2026
-                </div>
-                <div class="progress mb-3" style="height: 6px;">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 50%;"></div>
-                </div>
-                <div class="timeline-item done text-success fw-medium">✓ 1. Registro de CVU y pre-expediente (Completado)</div>
-                <div class="timeline-item active text-primary fw-bold">➔ 2. Validación y liberación de plataforma por la UV (Enviado)</div>
-                <div class="timeline-item text-muted">○ 3. Asignación de recurso por Comité evaluador (Pendiente)</div>
-            </div>
-        `
+        title: "UV - Posgrado",
+        welcome: "Hola, estás en el canal de posgrado. Aquí atendemos temas de maestría y especialidades.",
+        chips: [],
+        knowledgeBase: [],
+        defaultAnswer: "Este perfil está en desarrollo.",
+        trackingData: ""
     },
     egresado: {
-        title: "UV - Egresados y Alumni",
-        welcome: "Portal de Egresados UV. Resuelvo dudas sobre modalidades de titulación, aranceles y servicio social. Sube tu constancia de No Adeudo o INE.",
-        chips: [
-            { label: "Trámite Título", text: "¿Cuáles son los requisitos para tramitar el título?" }
-        ],
-        knowledgeBase: [
-            { 
-                keys: ['titulo', 'titulacion', 'arancel'], 
-                response: "Para iniciar tu trámite de título necesitas la liberación de servicio social, constancia de no adeudo de biblioteca y el pago del arancel de la UV.",
-                menu: [
-                    { label: "Costos de Aranceles", query: "¿Cuánto cuesta el arancel de titulación?" },
-                    { label: "Subir No Adeudo", query: "Subir constancia de biblioteca" }
-                ]
-            }
-        ],
-        defaultAnswer: "Entendido. Procesando tus metadatos para la Oficialía Mayor de la UV.",
-        trackingData: `
-            <div class="tracking-card warning-border mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-danger text-white fw-bold rounded-pill" style="font-size:0.75rem;">Rechazado Temporal</span>
-                    <small class="text-muted fw-medium">Folio: UV-TIT-2026-11</small>
-                </div>
-                <h6 class="fw-bold text-dark mb-1">Expedición de Título Profesional</h6>
-                <div class="text-muted mb-2" style="font-size: 0.78rem;">
-                    <i class="bi bi-building me-1"></i> Dirección General de Oficialía Mayor<br>
-                    <i class="bi bi-exclamation-circle-fill text-danger me-1"></i> Detenido por falta de documentos
-                </div>
-                <div class="progress mb-3" style="height: 6px;">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 33%;"></div>
-                </div>
-                <div class="timeline-item done text-success fw-medium">✓ 1. Pago de Aranceles de Titulación (Completado)</div>
-                <div class="timeline-item text-danger fw-bold">✕ 2. Validación de Expediente Físico (Detenido)</div>
-                <div class="p-2 bg-light border rounded-3 mb-2 text-dark" style="font-size: 0.75rem;">
-                    <strong class="text-danger">Observación del Revisor:</strong> Falta adjuntar en formato digital la Constancia de No Adeudo emitida por la Biblioteca Central de la UV.
-                </div>
-                <div class="timeline-item text-muted">○ 3. Emisión de Cédula y Título Electrónico (Pendiente)</div>
-            </div>
-        `
-    }
-};
-
-// Ramificaciones secuenciales de diálogo secundario
-const subKnowledgeBase = {
-    "requisitos detallados para la inscripción uv": {
-        response: "Para inscribir tus créditos escolares necesitas: \n1. Tener aprobadas las experiencias seriadas antecedentes.\n2. No exceder el límite máximo de créditos por periodo (ajustado a tu tutoría).\n3. Validar tu pre-inscripción en el sistema.",
-        menu: [{ label: "Ver Fechas de Ventanilla", query: "¿Cuál es el calendario oficial de la UV?" }]
-    },
-    "¿cuánto cuesta el arancel de inscripción?": {
-        response: "El arancel básico de inscripción de la Universidad Veracruzana incluye la cuota Pro-Mejoras (fijada por el comité de cada facultad), la aportación del comité de alumnos y el seguro de vida estudiantil. El monto total se refleja en tu orden de pago en MiUV.",
-        menu: [{ label: "Ver Formas de Pago Disponibles", query: "Formas de pago de aranceles" }]
-    },
-    "formas de pago de aranceles": {
-        response: "Puedes realizar tu pago mediante: \n1. En línea por MiUV (vía transferencia bancaria o tarjeta de crédito/débito con liberación inmediata).\n2. Ventanilla bancaria imprimiendo el formato con código de barras institucional (liberación en 48 horas).",
-        menu: [{ label: "Subir mi Comprobante de Pago", query: "Subir mi voucher de pago" }]
-    },
-    "paso a paso para dar de baja una materia": {
-        response: "Pasos para la Baja por Experiencia Educativa (EE):\n1. Ingresa a tu SICEUV durante la primera semana del periodo académico.\n2. Selecciona el apartado 'Baja de EE'.\n3. Confirma la materia (Verifica que no sea una EE en última oportunidad o afecte tus créditos mínimos). No requiere firmas si estás en tiempo ordinario.",
-        menu: [{ label: "Revisar implicaciones de permanencia", query: "¿Cómo afecta una baja a mi límite de tiempo en la UV?" }]
-    },
-    "¿cómo afecta una baja a mi límite de tiempo en la uv?": {
-        response: "Una baja en tiempo ordinario (primeros 5 días) no cuenta como oportunidad cursada (no genera reprobación). Sin embargo, debes cuidar no quedar por debajo de los créditos mínimos por periodo semestral, ya que esto podría congelar tu avance regular según el estatuto estudiantil.",
-        menu: [{ label: "Ver trámites con el Consejo Técnico", query: "¿Cómo redactar la solicitud de baja para el Consejo Técnico?" }]
-    },
-    "¿cómo redactar la solicitud de baja para el consejo técnico?": {
-        response: "La baja extemporánea (fuera de la primera semana) requiere un oficio formal dirigido al Consejo Técnico de tu Facultad explicando motivos de fuerza mayor (salud, trabajo, etc.) adjuntando evidencias (justificantes médicos oficiales, constancias laborales).",
-        menu: [{ label: "Ir a Soporte para descargar plantilla", query: "Formato para el Consejo Técnico" }]
+        title: "UV - Egresado / Alumno",
+        welcome: "Hola, estás en el canal de egresados. Te ayudamos con titulación y servicio social.",
+        chips: [],
+        knowledgeBase: [],
+        defaultAnswer: "Este perfil está en desarrollo.",
+        trackingData: ""
     }
 };
 
@@ -185,7 +108,7 @@ const subKnowledgeBase = {
 const documentResponses = [
     { 
         keywords: ['pago', 'voucher', 'arancel', 'recibo'], 
-        msg: "He detectado tu **Voucher de Pago/Arancel UV**. Sello digital de SEFIPLAN validado de forma conforme.",
+        msg: "He detectado tu **Voucher de Pago/Arancel UV**. Sello digital validado de forma conforme.",
         menu: [
             { label: "Ver Validación SICEUV", query: "Ver estatus de mi inscripción" },
             { label: "Descargar Comprobante", query: "Descargar comprobante institucional" }
@@ -193,7 +116,14 @@ const documentResponses = [
     },
     { 
         keywords: ['ine', 'identificacion', 'ife'], 
-        msg: "Identificación oficial **INE** detectada. Se ha validado la integridad y legibilidad de ambas caras.",
+        msg: "Identificación oficial **INE+* detectada. Se ha validado la integridad y legibilidad de ambas caras.",
+        menu: [
+            { label: "Ver mi Expediente Digital", query: "Ver mis documentos cargados" }
+        ]
+    },
+    {
+        keywords: ['constancia', 'inscripcion', 'kardex'], 
+        msg: "He detectado tu **Constancia de Inscripción**/**Kardex**. Se ha indexado a tu expediente de solicitud de beca de forma conforme.",
         menu: [
             { label: "Ver mi Expediente Digital", query: "Ver mis documentos cargados" }
         ]

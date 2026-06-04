@@ -1,53 +1,60 @@
 /* ==========================================
-   ESTILOS GENERALES Y DISPOSITIVO MÓVIL
+   ESTILOS GENERALES Y DISEÑO A PANTALLA COMPLETA
    ========================================== */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0c1a30;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
-/* Contenedor principal estilo Smartphone */
-.phone-container {
+/* Contenedor principal de la aplicación (Pantalla Completa) */
+.app-container {
     width: 100%;
-    max-width: 420px;
-    height: 90vh;
-    min-height: 680px;
-    background-color: #f8f9fa;
-    border-radius: 35px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border: 8px solid #212529;
+    max-width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: all 0.3s ease;
 }
 
-/* CONTEO DE CAPAS CRÍTICO: Obliga al viewport a ocupar todo el alto elástico del teléfono */
+/* CONTEO DE CAPAS CRÍTICO: Obliga al viewport a ocupar todo el alto elástico */
 #app-screens-viewport {
-    flex: 1; /* Absorbe todo el espacio vertical del celular */
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Mantiene las pantallas contenidas sin desbordes */
+    overflow: hidden; 
 }
 
-/* Barra de estado superior */
+/* Ocultar barra de estado falsa por defecto en escritorio (se muestra en móviles) */
 .phone-status-bar {
+    display: none;
     height: 24px;
     background-color: #0d6efd;
     color: white;
     font-size: 0.75rem;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     font-weight: 500;
     z-index: 10;
+}
+
+@media (max-width: 768px) {
+    .phone-status-bar {
+        display: flex;
+    }
 }
 
 /* Contenedor de pantallas: Asegura el 100% de la altura disponible */
