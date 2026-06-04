@@ -84,7 +84,54 @@ const dataProfiles = {
             }
         ],
         defaultAnswer: "No encontré una respuesta exacta a tu consulta. Puedes intentar reescribir tu pregunta usando palabras clave como 'baja de materia', 'beca', 'credencial', etc.",
-        trackingData: "<p class='text-muted p-3 text-center small'>No hay trámites activos registrados en Hephys.</p>"
+        // Dentro de dataProfiles.estudiante en knowledge.js:
+        trackingData: `
+            <div class="p-2">
+                <p class="text-muted mb-3" style="font-size: 0.78rem;">Flujos de validación en tiempo real para el Periodo Escolar 2026.</p>
+                
+                <div class="tracking-card warning-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">En Revisión</span>
+                        <small class="text-muted fw-medium">Folio: #UV-7742</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Baja de Experiencia Educativa</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Materia: Inglés II (AFBG)</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-clock-history text-warning"></i>
+                        <span>En espera de dictamen por el H. Consejo Técnico.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card success-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Aprobado</span>
+                        <small class="text-muted fw-medium">Folio: #IMSS-9012</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Alta de Seguro Facultativo IMSS</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Constancia de Vigencia de Derechos</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-shield-check text-success"></i>
+                        <span>Registro completado conforme ante la clínica correspondiente.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card border-start border-5 border-danger bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Acción Requerida</span>
+                        <small class="text-muted fw-medium">Folio: #CRE-3341</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Reposición de Credencial UV</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Trámite por Extravío / Robo</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-danger fw-medium" style="font-size: 0.72rem;">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span>Falta subir el voucher de pago arancelario.</span>
+                    </div>
+                </div>
+            </div>
+        `
     },
     posgrado: {
         title: "UV - Posgrado",
@@ -92,7 +139,53 @@ const dataProfiles = {
         chips: [],
         knowledgeBase: [],
         defaultAnswer: "Este perfil está en desarrollo.",
-        trackingData: ""
+        trackingData: `
+            <div class="p-2">
+                <p class="text-muted mb-3" style="font-size: 0.78rem;">Flujos de validación en tiempo real para el Periodo Escolar 2026.</p>
+                
+                <div class="tracking-card warning-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">En Revisión</span>
+                        <small class="text-muted fw-medium">Folio: #UV-7742</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Baja de Experiencia Educativa</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Materia: Inglés II (AFBG)</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-clock-history text-warning"></i>
+                        <span>En espera de dictamen por el H. Consejo Técnico.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card success-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Aprobado</span>
+                        <small class="text-muted fw-medium">Folio: #IMSS-9012</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Alta de Seguro Facultativo IMSS</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Constancia de Vigencia de Derechos</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-shield-check text-success"></i>
+                        <span>Registro completado conforme ante la clínica correspondiente.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card border-start border-5 border-danger bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Acción Requerida</span>
+                        <small class="text-muted fw-medium">Folio: #CRE-3341</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Reposición de Credencial UV</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Trámite por Extravío / Robo</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-danger fw-medium" style="font-size: 0.72rem;">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span>Falta subir el voucher de pago arancelario.</span>
+                    </div>
+                </div>
+            </div>
+        `
     },
     egresado: {
         title: "UV - Egresado / Alumno",
@@ -100,7 +193,53 @@ const dataProfiles = {
         chips: [],
         knowledgeBase: [],
         defaultAnswer: "Este perfil está en desarrollo.",
-        trackingData: ""
+        trackingData: `
+            <div class="p-2">
+                <p class="text-muted mb-3" style="font-size: 0.78rem;">Flujos de validación en tiempo real para el Periodo Escolar 2026.</p>
+                
+                <div class="tracking-card warning-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">En Revisión</span>
+                        <small class="text-muted fw-medium">Folio: #UV-7742</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Baja de Experiencia Educativa</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Materia: Inglés II (AFBG)</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-clock-history text-warning"></i>
+                        <span>En espera de dictamen por el H. Consejo Técnico.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card success-border bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Aprobado</span>
+                        <small class="text-muted fw-medium">Folio: #IMSS-9012</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Alta de Seguro Facultativo IMSS</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Constancia de Vigencia de Derechos</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.72rem;">
+                        <i class="bi bi-shield-check text-success"></i>
+                        <span>Registro completado conforme ante la clínica correspondiente.</span>
+                    </div>
+                </div>
+
+                <div class="tracking-card border-start border-5 border-danger bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 fw-bold" style="font-size: 0.65rem;">Acción Requerida</span>
+                        <small class="text-muted fw-medium">Folio: #CRE-3341</small>
+                    </div>
+                    <h6 class="fw-bold text-dark m-0 small">Reposición de Credencial UV</h6>
+                    <p class="text-muted m-0 mt-1" style="font-size: 0.75rem;">Trámite por Extravío / Robo</p>
+                    <hr class="my-2 text-black-50">
+                    <div class="d-flex align-items-center gap-2 text-danger fw-medium" style="font-size: 0.72rem;">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span>Falta subir el voucher de pago arancelario.</span>
+                    </div>
+                </div>
+            </div>
+        `
     }
 };
 

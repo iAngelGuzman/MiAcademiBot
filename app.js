@@ -58,7 +58,7 @@ function switchProfile(profile) {
     if (currentProfile === profile) return;
     currentProfile = profile;
 
-    // Validación de seguridad para la base de conocimientos de Hephys/UV
+    // Validación de seguridad para la base de conocimientos
     if (!dataProfiles[profile]) {
         console.error("Error: El perfil '" + profile + "' no está registrado en knowledge.js");
         return;
@@ -96,7 +96,7 @@ function viewTracking() {
     navigateTo('screen-tracking');
     if (trackingList && dataProfiles[currentProfile]) {
         trackingList.innerHTML = dataProfiles[currentProfile].trackingData || 
-            `<p class="text-muted p-3 text-center small">No hay trámites activos registrados en Hephys.</p>`;
+            `<p class="text-muted p-3 text-center small">No hay trámites activos registrados.</p>`;
     }
 }
 
